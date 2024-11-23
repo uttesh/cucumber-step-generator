@@ -1,0 +1,15 @@
+
+package {{packageName}};
+
+import io.cucumber.java.en.*;
+
+public class {{className}} {
+
+    {{#methods}}
+    @{{stepType}}("^{{stepText}}$")
+    public void {{methodName}}() {
+        // TODO: Implement step logic for: {{stepText}}
+        System.out.println("Executing step: {{stepText}}");
+    }
+    {{/methods}}
+}

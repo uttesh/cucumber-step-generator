@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'eclipse'  // Optional, for Eclipse IDE support
+    id 'idea'     // Optional, for IntelliJ IDEA support
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)  // Ensure Java 21 is used
+    }
+}
+
+repositories {
+    mavenCentral()  // Use Maven Central for dependencies
+}
+
+dependencies {
+    implementation 'com.github.spullara.mustache.java:compiler:0.9.10'
+    testImplementation 'io.cucumber:cucumber-java:7.11.1'
+}
+
+tasks.register("generateStepDefinitions",JavaExec) {
+    group = "Custom Tasks"
+    description = "Generates step definition classes for feature files"
+    mainClass = 'org.example.CucumberStepGenerator'
+    classpath = sourceSets.main.runtimeClasspath
+    args = [
+            "src/test/resources/features/sample.feature",
+            "src/test/java/org/example/steps"
+    ]
+    doFirst {
+        println("Generating step definitions...")
+    }
+    doLast {
+        println("Step definitions generated successfully!")
+    }
+}
+
